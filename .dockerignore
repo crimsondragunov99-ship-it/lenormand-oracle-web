@@ -1,0 +1,17 @@
+node_modules
+dist
+.git
+.env*
+private-assets
+private-secrets
+*.bundle.json
+public/cards
+public/cards_db.json
+public/rules_db.json
+private-assets
+*.png
+*.jpg
+*.jpeg
+*.webp
+*.safetensors
+*.ckpt

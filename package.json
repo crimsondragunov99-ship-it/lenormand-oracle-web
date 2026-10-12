@@ -1,0 +1,21 @@
+{
+  "name": "lenormand-oracle-web",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently -k \"node server/chatgpt.mjs\" \"vite --host 0.0.0.0 --open\"",
+    "build": "vite build",
+    "build:gas": "node scripts/build-gas-bundle.mjs",
+    "preview": "vite preview --host 0.0.0.0"
+  },
+  "dependencies": {
+    "@vitejs/plugin-react": "latest",
+    "concurrently": "^10.0.6",
+    "jose": "^6.2.12",
+    "lucide-react": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "vite": "latest"
+  }
+}

@@ -1,0 +1,45 @@
+services:
+  app:
+    build: .
+    restart: unless-stopped
+    init: true
+    environment:
+      NODE_ENV: production
+      AUTH_MODE: remote
+      APP_ORIGIN: ${APP_ORIGIN:?Set APP_ORIGIN in .env.production}
+      TOKEN_ENCRYPTION_KEY: ${TOKEN_ENCRYPTION_KEY:?Set TOKEN_ENCRYPTION_KEY in .env.production}
+      DATA_DIR: /var/lib/lenormand
+    volumes:
+      - app-data:/var/lib/lenormand
+      - site-root:/shared-site
+      - ./private-assets:/private-assets:ro
+      - ./private-secrets:/private-secrets:ro
+    command:
+      - sh
+      - -c
+      - mkdir -p /shared-site && cp -a /app/dist/. /shared-site/ && cp -a /private-assets/. /shared-site/ && exec node server/chatgpt.mjs
+    expose:
+      - "4175"
+
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    env_file:
+      - .env.production
+    depends_on:
+      - app
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - site-root:/srv:ro
+      - caddy-data:/data
+      - caddy-config:/config
+
+volumes:
+  app-data:
+  site-root:
+  caddy-data:
+  caddy-config:

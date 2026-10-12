@@ -1,0 +1,16 @@
+{$SITE_ADDRESS} {
+	encode zstd gzip
+	header {
+		Cache-Control "no-store"
+		X-Content-Type-Options nosniff
+		Referrer-Policy no-referrer
+		X-Frame-Options DENY
+	}
+	basic_auth {
+		{$BASIC_AUTH_USER} {$BASIC_AUTH_HASH}
+	}
+	@api path /api/*
+	reverse_proxy @api app:4175
+	root * /srv
+	file_server
+}

@@ -1,0 +1,6 @@
+generated/**
+**/generated/**
+README.md
+**/README.md
+.clasp.json
+**/.clasp.json
